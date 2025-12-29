@@ -64,6 +64,20 @@ void setup() {
   
   Serial.println(F("BIENVENIDO A LA CASA INTELIGENTE"));
   
+  // RECUPERAR ULTIMA ESCENA
+  char nombreGuardado[13]; 
+  for (int i = 0; i < 12; i++) nombreGuardado[i] = EEPROM.read(DIR_ULTIMA_ACTIVA + i);
+  nombreGuardado[12] = '\0'; 
+
+  if (isalnum(nombreGuardado[0])) {
+    String nombreStr = String(nombreGuardado);
+    Serial.print(F("Recuperando: ")); Serial.println(nombreStr);
+    int slot = buscarSlotPorNombre(nombreStr);
+    if (slot != -1) {
+      cargarNombreEscena(slot);
+      ejecutarEscena();
+    }
+  }
 }
 
 void loop() {
@@ -92,14 +106,17 @@ void loop() {
         } 
         else if (comando == "LIST_SCENE") listarEscenas();
         else if (comando == "ERASE_SCENES") borrarTodasLasEscenas();
+        else if (comando.startsWith("SHOW_SCENE")) {
+          mostrarEscena(comando.substring(11));
+        } 
         else if(comando == "STOP"){
-            escenaActiva = false;
-            nombreEscenaActiva = "Manual";
-            escenaEstado = "Manual";
-            Serial.println(F("ESCENA DETENIDA"));
-          } 
-        
+          escenaActiva = false;
+          nombreEscenaActiva = "Manual";
+          escenaEstado = "Manual";
+          Serial.println(F("ESCENA DETENIDA"));
+        } 
         else {
+          
           // BUSCAR Y EJECUTAR ESCENA
           int slot = buscarSlotPorNombre(comando); 
           if (slot != -1) {
@@ -298,6 +315,7 @@ void ejecutarEscena() {
   escenaActiva = false;
 }
 
+
 // IMPRIMIR NOMBRE DE PINES
 void imprimirNombreAmbiente(byte pin) {
   if (pin == ledSala) Serial.print(F("SALA"));
@@ -305,6 +323,7 @@ void imprimirNombreAmbiente(byte pin) {
   else if (pin == ledCocina) Serial.print(F("COCINA"));
   else if (pin == ledBano) Serial.print(F("BANO"));
   else if (pin == ledHabitacion) Serial.print(F("HABITACION"));
+  else if (pin == motorPin) Serial.print(F("VENTILADOR"));
   else { Serial.print(F("PIN_")); Serial.print(pin); }
 }
 
@@ -370,5 +389,41 @@ byte getPinFromAmbiente(String amb) {
   if (amb.indexOf("COCINA") != -1) return ledCocina;
   if (amb.indexOf("BANO") != -1 || amb.indexOf("BAÑO") != -1) return ledBano;
   if (amb.indexOf("HABITACION") != -1) return ledHabitacion;
+  if (amb.indexOf("FAN") != -1) return motorPin;
   return 0;
+}
+
+// MOSTRAR DETALLES ESCENA
+void mostrarEscena(String nombre) {
+  int slot = buscarSlotPorNombre(nombre);
+  if (slot < 0) { Serial.println(F("NO EXISTE")); return; }
+  
+  int base = calcularDireccionSlot(slot);
+  char nombreArr[13];
+  for(int i=0; i<12; i++) nombreArr[i] = EEPROM.read(base+i);
+  nombreArr[12]='\0';
+  
+  int total = EEPROM.read(base+12);
+  
+  Serial.print(F("ESCENA: ")); Serial.println(nombreArr);
+  Serial.print(F("PASOS: ")); Serial.println(total);
+
+  int dirPasos = base + 14;
+
+  for (int i = 0; i < total; i++) {
+    int addr = dirPasos + (i * 5);
+    byte p_pin = EEPROM.read(addr);
+    bool p_estado = EEPROM.read(addr + 1);
+    unsigned int p_dur = word(EEPROM.read(addr + 3), EEPROM.read(addr + 2));
+    byte p_rep = EEPROM.read(addr + 4);
+
+    Serial.print(i + 1); Serial.print(F(") "));
+    imprimirNombreAmbiente(p_pin);
+    Serial.print(F(":"));
+    Serial.print(p_estado ? F("ON") : F("OFF"));
+    Serial.print(F(":"));
+    Serial.print(p_dur);
+    Serial.print(F("ms:x"));
+    Serial.println(p_rep);
+  }
 }
