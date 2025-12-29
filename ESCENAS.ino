@@ -92,14 +92,24 @@ void loop() {
         } 
         else if (comando == "LIST_SCENE") listarEscenas();
         else if (comando == "ERASE_SCENES") borrarTodasLasEscenas();
-       
+        else if(comando == "STOP"){
+            escenaActiva = false;
+            nombreEscenaActiva = "Manual";
+            escenaEstado = "Manual";
+            Serial.println(F("ESCENA DETENIDA"));
+          } 
         
         else {
           // BUSCAR Y EJECUTAR ESCENA
-         
+          int slot = buscarSlotPorNombre(comando); 
+          if (slot != -1) {
+            Serial.print(F("Cargando escena slot: ")); Serial.println(slot);
+            cargarNombreEscena(slot); 
+            ejecutarEscena(); 
+          } else {
             Serial.println(F("COMANDO INEXISTENTE"));
             lcd.clear(); lcd.print("ERROR COMANDO");
-          
+          }
         }
       }
     }
@@ -213,7 +223,80 @@ bool cargarNombreEscena(int slot) {
   return true;
 }
 
+// EJECUTAR LEYENDO DIRECTAMENTE DE EEPROM
+void ejecutarEscena() {
+  escenaActiva = true;
+  Serial.print(F("EJECUTANDO: ")); Serial.println(nombreEscenaActiva);
+  lcd.clear(); lcd.print("RUN:"); lcd.setCursor(4,0); lcd.print(nombreEscenaActiva);
 
+  int slot = buscarSlotPorNombre(nombreEscenaActiva);
+  if(slot == -1) return;
+
+  int dirBase = calcularDireccionSlot(slot);
+  int totalPasosEnSlot = 0;
+  EEPROM.get(dirBase + 12, totalPasosEnSlot);
+  
+  if(totalPasosEnSlot > MAX_PASOS) totalPasosEnSlot = 0;
+
+  int dirPasos = dirBase + 14;
+
+  // BUCLE DE PASOS
+  for (int i = 0; i < totalPasosEnSlot; i++) {
+    if(Serial.available() > 0){
+       Serial.println(F("INTERRUMPIDO"));
+       escenaActiva = false;
+       return; 
+    }
+
+    // LEER PASO ACTUAL
+    int addr = dirPasos + (i * 5);
+    byte p_pin = EEPROM.read(addr);
+    bool p_estado = EEPROM.read(addr + 1);
+    unsigned int p_dur = word(EEPROM.read(addr + 3), EEPROM.read(addr + 2));
+    byte p_rep = EEPROM.read(addr + 4);
+
+    Serial.print(F(">> Paso ")); Serial.print(i+1); Serial.print(F(": "));
+    imprimirNombreAmbiente(p_pin);
+    Serial.print(F(" -> ")); Serial.println(p_estado ? F("ON") : F("OFF"));
+
+    // EJECUTAR REPETICIONES
+    int rep = (p_rep > 0) ? p_rep : 1;
+    for (int r = 0; r < rep; r++) {
+       if(Serial.available() > 0){
+         Serial.println(F("INTERRUMPIDO"));
+         escenaActiva = false;
+         return; 
+       }
+
+       if (p_estado) { 
+         // SI EL PASO ES EL VENTILADOR
+         if(p_pin == motorPin){
+           analogWrite(p_pin, 170);
+           delay(p_dur);
+           analogWrite(p_pin, 0);
+           delay(p_dur);
+         } else {
+           digitalWrite(p_pin, HIGH);
+           delay(p_dur);
+           digitalWrite(p_pin, LOW);
+           delay(p_dur);
+         }
+          
+       } else { 
+         if(p_pin == motorPin){
+           analogWrite(p_pin, 0);
+           delay(p_dur << 1); 
+         } else {
+           digitalWrite(p_pin, LOW);
+           delay(p_dur << 1);
+         }
+       }
+    }
+  }
+  Serial.println(F("FIN ESCENA"));
+  lcd.clear(); lcd.print("FIN ESCENA");
+  escenaActiva = false;
+}
 
 // IMPRIMIR NOMBRE DE PINES
 void imprimirNombreAmbiente(byte pin) {
