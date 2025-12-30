@@ -127,6 +127,10 @@ El estado del sistema se muestra mediante una pantalla LCD I2C, en la cual se vi
 
 ##  Diagramas de diseño
 
+### DIAGRAMA TINKERCAD
+<img width="1406" height="783" alt="diagrama-inferior" src="https://github.com/user-attachments/assets/b9f7cd6a-ad39-40b1-b167-8dfc90091112" />
+<img width="1567" height="808" alt="diagrama-superior" src="https://github.com/user-attachments/assets/86c24188-6684-4bfd-a187-6c188f4d36f0" />
+<img width="992" height="764" alt="image" src="https://github.com/user-attachments/assets/4b0c6917-d17a-4d1c-b75e-a6ab4e426e83" />
 
 ---
 
@@ -187,4 +191,10 @@ Se reutilizaron algunos materiales ,ya que se tenian adquiridos de cursos u otra
 ---
 ## Bibliografía
 - https://docs.arduino.cc/
+---
+
+---
+## ANEXOS
+- Link Video:https://youtu.be/lYLnU8sjeug
+- Link Simulacion Tinkercad: https://www.tinkercad.com/things/anowxJ8Rz09-proyecto-orga-2025-final?sharecode=5KJGbbnubmVv6DNVDn6xw-GjzaVTudjRTotKl2c_oqE
 ---
