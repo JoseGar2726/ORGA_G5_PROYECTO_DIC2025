@@ -1,0 +1,15 @@
+# Escena: FIESTA
+
+# Descripcion: Luces parpadeando rapidamente en patron alternado
+
+# Duracion total aproximada: 20 segundos
+
+SALA:ON:500:20
+
+COMEDOR:OFF:500:20
+
+COCINA:ON:300:30
+
+BANO:OFF:300:30
+
+HABITACION:ON:200:50

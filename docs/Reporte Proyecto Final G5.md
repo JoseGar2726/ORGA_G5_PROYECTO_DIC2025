@@ -157,7 +157,7 @@ El estado del sistema se muestra mediante una pantalla LCD I2C, en la cual se vi
 ##  Presupuesto
 Se reutilizaron algunos materiales ,ya que se tenian adquiridos de cursos u otras actividades anteriores ,solamante se adquirio los faltantes los cuales eran:
 
- Dando un total de materiales faltantes utilizados de Q
+ Dando un total de materiales faltantes utilizados de Q295 entre los materiales que se usaron para la construcción de la maqueta como para el circuito fisico
 
 ---
 
