@@ -123,6 +123,15 @@ El sistema incorpora escenas luminosas que ejecutan secuencias automáticas de c
 
 El estado del sistema se muestra mediante una pantalla LCD I2C, en la cual se visualiza la escena activa, el estado de la puerta y el modo del ventilador. Esta interfaz permite al usuario supervisar el funcionamiento del sistema en tiempo real de manera clara y directa.
 
+### Funcionamiento en vivo:
+A continuación se presenta la evidencia gráfica del funcionamiento del sistema de automatización residencial. Las capturas validan la interacción exitosa entre el usuario y el microcontrolador a través del Monitor Serial, mostrando el envío de comandos y la retroalimentación en tiempo real. Asimismo, se documenta la respuesta visual en la pantalla LCD, desplegando información dinámica sobre las escenas activas ('Fiesta', 'Relajado', 'Noche'), la correcta recuperación de datos desde la memoria EEPROM tras el reinicio del sistema.
+
+![Escena1](https://github.com/user-attachments/assets/993bbdf4-5a3d-4118-98fa-2cb38950fd79)
+![Escena2](https://github.com/user-attachments/assets/c2fee363-bee7-4756-910e-8dc6d86c2044)
+![Escena3](https://github.com/user-attachments/assets/a290f7a8-c8e0-484a-b855-c6ff2ab73340)
+![Escena4](https://github.com/user-attachments/assets/edf15bf3-0da5-427c-bb82-194056385413)
+![Escena5](https://github.com/user-attachments/assets/2abaded4-c33b-4fb1-a521-09850f00ab9a)
+
 ---
 
 ##  Diagramas de diseño
