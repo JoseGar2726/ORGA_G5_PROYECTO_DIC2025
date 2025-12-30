@@ -146,6 +146,7 @@ void loop() {
           nombreEscenaActiva = "Manual";
           escenaEstado = "Manual";
           Serial.println(F("ESCENA DETENIDA"));
+          lcd.clear(); lcd.print("Escena: Manual");
         } 
         else if (comando == "STATUS") {
            imprimirStatus();
@@ -154,11 +155,11 @@ void loop() {
            resetSistema();
         }
         else if (comando == "VERSION") {
-           Serial.println(F"(Casa Dic 2025 ,Grupo 5 conformado por:"));
-           Serial.println(F"(José Antonio García Roca - 202401166"));
-           Serial.println(F"(Esmeralda Del Rosario Guillén Veliz - 201901002"));
-           Serial.println(F"(Nelson Andres Santa Cruz Gil - 202202728"));
-           Serial.println(F"(Angel Emanuel Rodriguez Corado - 202404856"));
+           Serial.println(F("Casa Dic 2025 ,Grupo 5 conformado por:"));
+           Serial.println(F("José Antonio García Roca - 202401166"));
+           Serial.println(F("Esmeralda Del Rosario Guillén Veliz - 201901002"));
+           Serial.println(F("Nelson Andres Santa Cruz Gil - 202202728"));
+           Serial.println(F("Angel Emanuel Rodriguez Corado - 202404856"));
            Serial.println(F("Pablo Daniel Solares Samayoa - 202400044"));
         }
         else {
