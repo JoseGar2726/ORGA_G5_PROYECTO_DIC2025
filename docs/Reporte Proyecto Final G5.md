@@ -77,7 +77,7 @@ El desarrollo de esta práctica permite aplicar conocimientos de sistemas embebi
 ##  Presupuesto
 Se reutilizaron la mayoria de materiales ,ya que  se tenian adquiridos de cursos  u otras actividades anteriores solamante se adquirio los faltantes los cuales eran:
 
- Dando un total de materiales faltantes utilizados de Q
+ Dando un total de materiales faltantes utilizados de Q295.
 
 ---
 
