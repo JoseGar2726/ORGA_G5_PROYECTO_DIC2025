@@ -1,0 +1,15 @@
+# Escena: NOCHE
+
+# Descripcion: Iluminacion minima para horario nocturno
+
+# Solo luces necesarias encendidas
+
+SALA:OFF:5000:1
+
+COMEDOR:OFF:5000:1
+
+COCINA:OFF:5000:1
+
+BANO:ON:5000:1
+
+HABITACION:ON:5000:1

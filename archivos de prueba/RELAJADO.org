@@ -1,0 +1,15 @@
+# Escena: RELAJADO
+
+# Descripcion: Encendido suave y progresivo con pocas luces
+
+# Ambiente de calma y descanso
+
+SALA:ON:3000:1
+
+HABITACION:ON:2000:1
+
+COMEDOR:OFF:2000:1
+
+COCINA:OFF:2000:1
+
+BANO:ON:3000:1
