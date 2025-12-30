@@ -155,7 +155,7 @@ El estado del sistema se muestra mediante una pantalla LCD I2C, en la cual se vi
 ---
 
 ##  Presupuesto
-Se reutilizaron algunos materiales ,ya que se tenian adquiridos de cursos u otras actividades anteriores ,solamante se adquirio los faltantes los cuales eran:
+Se reutilizaron algunos materiales ,ya que se tenian adquiridos de cursos u otras actividades anteriores ,solamante se adquirio los faltantes.
 
  Dando un total de materiales faltantes utilizados de Q295 entre los materiales que se usaron para la construcción de la maqueta como para el circuito fisico
 
@@ -168,7 +168,7 @@ Se reutilizaron algunos materiales ,ya que se tenian adquiridos de cursos u otra
 - Diseño Físico Arduino: Esmeralda Del Rosario Guillén Veliz
 - Lógica Arduino: Nelson Andres Santa Cruz Gil 
 - Diseño Físico Maqueta: Angel Emanuel Rodriguez Corado
-- Lógica Arduino :Pablo Daniel Solares Samayoa
+- Lógica Arduino : Pablo Daniel Solares Samayoa
 
 
 ---
